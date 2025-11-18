@@ -1,96 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-    <title>Vercel HTML Starter</title>
-    <meta
-      name="description"
-      content="High-performance HTML based website template."
-    />
-  </head>
-  <body>
-    <h1>Vercel HTML Starter</h1>
-    <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
-    </p>
-    <h2>Simple, privacy-friendly analytics</h2>
-    <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
-    </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
-    </p>
-    <h2>Integrated with git</h2>
-    <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigInt Compatibility Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .test-section {
+            margin-bottom: 20px;
+        }
+        
+        .test-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .test-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .test-button:hover {
+            background: #764ba2;
+        }
+        
+        .test-button.danger {
+            background: #dc3545;
+        }
+        
+        .test-button.danger:hover {
+            background: #c82333;
+        }
+        
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            color: #333;
+            max-height: 200px;
+            overflow-y: auto;
+            word-break: break-all;
+        }
+        
+        .result-box.error {
+            background: #fff5f5;
+            border-color: #fc8181;
+            color: #c53030;
+        }
+        
+        .result-box.success {
+            background: #f0fdf4;
+            border-color: #86efac;
+            color: #166534;
+        }
+        
+        .divider {
+            border: none;
+            border-top: 1px solid #e9ecef;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BigInt Compatibility Test</h1>
+        
+        <div class="test-section">
+            <div class="test-title">Environment</div>
+            <div class="result-box" id="envResult"></div>
+        </div>
+        
+        <hr class="divider">
+        
+        <div class="test-section">
+            <div class="test-title">Native BigInt Support</div>
+            <button class="test-button" onclick="testNativeBigInt()">Test</button>
+            <div class="result-box" id="nativeResult"></div>
+        </div>
+        
+        <hr class="divider">
+        
+        <div class="test-section">
+            <div class="test-title">Basic Operations (big.js)</div>
+            <button class="test-button" onclick="testBasicOps()">Test</button>
+            <div class="result-box" id="basicResult"></div>
+        </div>
+        
+        <hr class="divider">
+        
+        <div class="test-section">
+            <div class="test-title">Large Number Calculation</div>
+            <button class="test-button" onclick="testLargeNum()">Test</button>
+            <div class="result-box" id="largeResult"></div>
+        </div>
+        
+        <hr class="divider">
+        
+        <div class="test-section">
+            <div class="test-title">Polyfill Test (Disable Native BigInt First)</div>
+            <button class="test-button danger" onclick="disableBigInt()">Disable BigInt</button>
+            <button class="test-button" onclick="testPolyfill()">Test Polyfill</button>
+            <div class="result-box" id="polyfillResult"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/6.2.1/big.min.js"></script>
+
+    <script>
+        // Show environment
+        function showEnvironment() {
+            const result = document.getElementById('envResult');
+            result.textContent = navigator.userAgent;
+        }
+        
+        // Test native BigInt
+        function testNativeBigInt() {
+            const result = document.getElementById('nativeResult');
+            if (typeof BigInt !== 'undefined') {
+                result.className = 'result-box success';
+                result.textContent = '✅ Native BigInt supported\n\nBigInt(123456789n) = ' + BigInt(123456789n);
+            } else {
+                result.className = 'result-box error';
+                result.textContent = '❌ BigInt not supported\n\nPolyfill required for Safari 13';
+            }
+        }
+        
+        // Test basic operations with big.js
+        function testBasicOps() {
+            const result = document.getElementById('basicResult');
+            try {
+                const a = new Big(100);
+                const b = new Big(50);
+                result.className = 'result-box success';
+                result.textContent = `✅ Operations successful\n\n100 + 50 = ${a.plus(b)}\n100 - 50 = ${a.minus(b)}\n100 × 50 = ${a.times(b)}\n100 ÷ 50 = ${a.div(b)}`;
+            } catch (e) {
+                result.className = 'result-box error';
+                result.textContent = '❌ Error: ' + e.message;
+            }
+        }
+        
+        // Test large numbers
+        function testLargeNum() {
+            const result = document.getElementById('largeResult');
+            try {
+                const a = new Big('123456789012345678901234567890');
+                const b = new Big('987654321098765432109876543210');
+                const sum = a.plus(b);
+                result.className = 'result-box success';
+                result.textContent = `✅ Large number calculation successful\n\nResult:\n${sum.toString()}`;
+            } catch (e) {
+                result.className = 'result-box error';
+                result.textContent = '❌ Error: ' + e.message;
+            }
+        }
+        
+        // Disable native BigInt
+        function disableBigInt() {
+            if (typeof BigInt !== 'undefined') {
+                delete window.BigInt;
+                document.getElementById('polyfillResult').textContent = '⚠️ BigInt disabled (simulating Safari 13)';
+                document.getElementById('polyfillResult').className = 'result-box';
+            }
+        }
+        
+        // Test polyfill
+        function testPolyfill() {
+            const result = document.getElementById('polyfillResult');
+            if (typeof BigInt === 'undefined') {
+                window.BigInt = function(value) {
+                    return new Big(value);
+                };
+                try {
+                    const test = BigInt('123456789012345678901234567890');
+                    result.className = 'result-box success';
+                    result.textContent = `✅ Polyfill loaded successfully\n\nBigInt('123456789012345678901234567890')\n= ${test.toString()}`;
+                } catch (e) {
+                    result.className = 'result-box error';
+                    result.textContent = '❌ Error: ' + e.message;
+                }
+            } else {
+                result.className = 'result-box success';
+                result.textContent = '✅ Native BigInt available\n\nNo polyfill needed';
+            }
+        }
+        
+        // Initialize
+        window.addEventListener('load', showEnvironment);
+    </script>
+</body>
 </html>
