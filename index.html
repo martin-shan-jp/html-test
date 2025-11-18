@@ -150,35 +150,112 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/6.2.1/big.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.15.0/vconsole.min.js"></script>
 
     <script>
-        // Show environment
+        // Initialize VConsole
+        const vConsole = new VConsole({
+            maxLogNumber: 1000,
+            theme: 'dark'
+        });
+        
+        console.log('='.repeat(50));
+        console.log('🚀 BigInt Compatibility Test Started');
+        console.log('='.repeat(50));
+        console.log('VConsole initialized');
+        console.log('Time:', new Date().toLocaleString());
+        
+        // Display environment information
         function showEnvironment() {
+            console.log('\n📱 === Environment Information ===');
+            const userAgent = navigator.userAgent;
+            console.log('User Agent:', userAgent);
+            console.log('Language:', navigator.language);
+            console.log('Platform:', navigator.platform);
+            console.log('Online Status:', navigator.onLine);
+            console.log('Max Touch Points:', navigator.maxTouchPoints);
+            console.log('Device Memory:', navigator.deviceMemory, 'GB');
+            console.log('CPU Cores:', navigator.hardwareConcurrency);
+            console.log('Local Time:', new Date().toString());
+            console.log('Timezone Offset:', new Date().getTimezoneOffset(), 'minutes');
+            
             const result = document.getElementById('envResult');
-            result.textContent = navigator.userAgent;
+            result.textContent = userAgent;
         }
         
-        // Test native BigInt
+        // Test native BigInt support
         function testNativeBigInt() {
+            console.log('\n🔍 === Testing Native BigInt Support ===');
             const result = document.getElementById('nativeResult');
+            
+            console.log('Checking if BigInt is defined...');
+            console.log('typeof BigInt:', typeof BigInt);
+            
             if (typeof BigInt !== 'undefined') {
-                result.className = 'result-box success';
-                result.textContent = '✅ Native BigInt supported\n\nBigInt(123456789n) = ' + BigInt(123456789n);
+                console.log('✅ Native BigInt is supported');
+                try {
+                    const testVal = BigInt(123456789);
+                    console.log('Test value:', testVal);
+                    console.log('BigInt type test:', typeof testVal);
+                    console.log('Constructor:', testVal.constructor.name);
+                    
+                    result.className = 'result-box success';
+                    result.textContent = '✅ Native BigInt Supported\n\nBigInt(123456789) = ' + testVal;
+                } catch (e) {
+                    console.error('❌ BigInt conversion failed:', e.message);
+                    result.className = 'result-box error';
+                    result.textContent = '❌ Error: ' + e.message;
+                }
             } else {
+                console.warn('⚠️ BigInt not supported');
+                console.log('Polyfill required for Safari 13 and below');
                 result.className = 'result-box error';
-                result.textContent = '❌ BigInt not supported\n\nPolyfill required for Safari 13';
+                result.textContent = '❌ BigInt Not Supported\n\nPolyfill Required for Safari 13';
             }
         }
         
-        // Test basic operations with big.js
+        // Test basic operations
         function testBasicOps() {
+            console.log('\n🔢 === Testing Basic Operations (big.js) ===');
             const result = document.getElementById('basicResult');
+            
+            console.log('Checking Big library...');
+            console.log('typeof Big:', typeof Big);
+            console.log('Big version: 6.2.1');
+            
             try {
+                console.log('Creating first Big number: 100');
                 const a = new Big(100);
+                console.log('a =', a.toString());
+                console.log('a type:', a.constructor.name);
+                
+                console.log('Creating second Big number: 50');
                 const b = new Big(50);
+                console.log('b =', b.toString());
+                console.log('b type:', b.constructor.name);
+                
+                console.log('Performing addition: a + b');
+                const sum = a.plus(b);
+                console.log('Result:', sum.toString());
+                
+                console.log('Performing subtraction: a - b');
+                const diff = a.minus(b);
+                console.log('Result:', diff.toString());
+                
+                console.log('Performing multiplication: a × b');
+                const prod = a.times(b);
+                console.log('Result:', prod.toString());
+                
+                console.log('Performing division: a ÷ b');
+                const div = a.div(b);
+                console.log('Result:', div.toString());
+                
+                console.log('✅ All basic operations successful');
                 result.className = 'result-box success';
-                result.textContent = `✅ Operations successful\n\n100 + 50 = ${a.plus(b)}\n100 - 50 = ${a.minus(b)}\n100 × 50 = ${a.times(b)}\n100 ÷ 50 = ${a.div(b)}`;
+                result.textContent = `✅ Operations Successful\n\n100 + 50 = ${sum}\n100 - 50 = ${diff}\n100 × 50 = ${prod}\n100 ÷ 50 = ${div}`;
             } catch (e) {
+                console.error('❌ Operation failed:', e.message);
+                console.error('Stack trace:', e.stack);
                 result.className = 'result-box error';
                 result.textContent = '❌ Error: ' + e.message;
             }
@@ -186,51 +263,126 @@
         
         // Test large numbers
         function testLargeNum() {
+            console.log('\n📊 === Testing Large Number Calculation ===');
             const result = document.getElementById('largeResult');
+            
             try {
-                const a = new Big('123456789012345678901234567890');
-                const b = new Big('987654321098765432109876543210');
+                const aStr = '123456789012345678901234567890';
+                const bStr = '987654321098765432109876543210';
+                
+                console.log('Number A:', aStr);
+                console.log('Number B:', bStr);
+                
+                console.log('Creating Big objects...');
+                const a = new Big(aStr);
+                const b = new Big(bStr);
+                
+                console.log('A digit count:', aStr.length);
+                console.log('B digit count:', bStr.length);
+                
+                console.log('Performing addition...');
                 const sum = a.plus(b);
+                console.log('Addition result:', sum.toString());
+                console.log('Result digit count:', sum.toString().length);
+                
+                console.log('Performing multiplication...');
+                const product = a.times(b);
+                console.log('Multiplication result:', product.toString());
+                console.log('Result digit count:', product.toString().length);
+                
+                console.log('✅ Large number calculation successful');
                 result.className = 'result-box success';
-                result.textContent = `✅ Large number calculation successful\n\nResult:\n${sum.toString()}`;
+                result.textContent = `✅ Large Number Calculation Successful\n\nAddition Result:\n${sum.toString()}\n\nMultiplication Result:\n${product.toString()}`;
             } catch (e) {
+                console.error('❌ Calculation failed:', e.message);
+                console.error('Error type:', e.constructor.name);
                 result.className = 'result-box error';
                 result.textContent = '❌ Error: ' + e.message;
             }
         }
         
-        // Disable native BigInt
+        // Disable BigInt
         function disableBigInt() {
+            console.log('\n🔒 === Disabling BigInt ===');
             if (typeof BigInt !== 'undefined') {
+                console.log('Native BigInt exists');
+                console.log('Deleting window.BigInt...');
                 delete window.BigInt;
-                document.getElementById('polyfillResult').textContent = '⚠️ BigInt disabled (simulating Safari 13)';
+                console.log('Verifying deletion - typeof BigInt:', typeof BigInt);
+                console.log('✅ BigInt disabled (simulating Safari 13)');
+                document.getElementById('polyfillResult').textContent = '⚠️ BigInt Disabled (Simulating Safari 13)';
                 document.getElementById('polyfillResult').className = 'result-box';
+            } else {
+                console.log('⚠️ BigInt already undefined');
             }
         }
         
-        // Test polyfill
+        // Test Polyfill
         function testPolyfill() {
+            console.log('\n🔧 === Testing Polyfill ===');
             const result = document.getElementById('polyfillResult');
+            
+            console.log('Checking native BigInt...');
+            console.log('typeof BigInt:', typeof BigInt);
+            
             if (typeof BigInt === 'undefined') {
-                window.BigInt = function(value) {
-                    return new Big(value);
-                };
+                console.log('⚠️ BigInt undefined, loading polyfill...');
                 try {
-                    const test = BigInt('123456789012345678901234567890');
+                    console.log('Creating BigInt polyfill function...');
+                    window.BigInt = function(value) {
+                        console.log('Polyfill BigInt called with value:', value);
+                        return new Big(value);
+                    };
+                    console.log('✅ Polyfill function created');
+                    
+                    console.log('Testing polyfill...');
+                    const testVal = '123456789012345678901234567890';
+                    console.log('Input value:', testVal);
+                    const test = BigInt(testVal);
+                    console.log('Polyfill result:', test.toString());
+                    console.log('Result type:', test.constructor.name);
+                    
+                    console.log('✅ Polyfill loaded and working');
                     result.className = 'result-box success';
-                    result.textContent = `✅ Polyfill loaded successfully\n\nBigInt('123456789012345678901234567890')\n= ${test.toString()}`;
+                    result.textContent = `✅ Polyfill Loaded Successfully\n\nBigInt('${testVal}')\n= ${test.toString()}`;
                 } catch (e) {
+                    console.error('❌ Polyfill failed:', e.message);
+                    console.error('Stack trace:', e.stack);
                     result.className = 'result-box error';
                     result.textContent = '❌ Error: ' + e.message;
                 }
             } else {
+                console.log('✅ Native BigInt available');
+                console.log('Polyfill not needed');
                 result.className = 'result-box success';
-                result.textContent = '✅ Native BigInt available\n\nNo polyfill needed';
+                result.textContent = '✅ Native BigInt Available\n\nNo Polyfill Needed';
             }
         }
         
-        // Initialize
-        window.addEventListener('load', showEnvironment);
+        // Page load complete
+        window.addEventListener('load', function() {
+            console.log('\n✨ === Page Load Complete ===');
+            console.log('DOM ready');
+            showEnvironment();
+            console.log('VConsole ready - open developer tools or click VConsole button to view logs');
+            console.log('='.repeat(50));
+        });
+        
+        // Global error catching
+        window.addEventListener('error', function(event) {
+            console.error('🔴 Global Error Caught');
+            console.error('Message:', event.message);
+            console.error('File:', event.filename);
+            console.error('Line:', event.lineno);
+            console.error('Column:', event.colno);
+            console.error('Error object:', event.error);
+        });
+        
+        // Unhandled Promise rejection catching
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('🔴 Unhandled Promise Rejection');
+            console.error('Reason:', event.reason);
+        });
     </script>
 </body>
 </html>
